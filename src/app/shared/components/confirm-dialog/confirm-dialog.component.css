@@ -1,0 +1,10 @@
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  border-top: none !important;
+}
+button:disabled,
+button.disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}

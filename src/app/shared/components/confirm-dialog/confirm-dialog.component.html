@@ -1,0 +1,22 @@
+<div class="modal-header">
+  <h4 class="modal-title w-100 text-center">{{ title }}</h4>
+</div>
+<div class="modal-body">
+  <p class="text-center">{{ message }}</p>
+  <div *ngIf="showAgreement" class="flex items-center gap-1">
+    <input type="checkbox" (change)="agreed($event)" class="cursor-pointer" />
+    <p>I agree</p>
+  </div>
+</div>
+<div class="modal-footer">
+  <button *ngIf="showAgreement" type="button" [ngClass]="confirmBtnClass" (click)="confirm()" [disabled]="!agreement"
+    [class.disabled]="!agreement">
+    {{ confirmText }}
+  </button>
+  <button *ngIf="!showAgreement" type="button" [ngClass]="confirmBtnClass" (click)="confirm()">
+    {{ confirmText }}
+  </button>
+  <button type="button" [ngClass]="cancelBtnClass" (click)="cancel()">
+    {{ cancelText }}
+  </button>
+</div>
