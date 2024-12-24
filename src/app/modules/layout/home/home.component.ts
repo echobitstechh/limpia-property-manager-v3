@@ -9,19 +9,15 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   collapsed = false;
   isDrawerVisible = false;
-  isLoggedIn = false;
+  isLoggedIn = true;
   userName = 'AB';
   activeMenu = '';
   sideBarDetails = [
-    { title: 'Dashboard', icon: 'dashboard', key: '/dashboard' },
-    { title: 'Courses', icon: 'book', key: '/courses' },
-    { title: 'Categories', icon: 'appstore', key: '/categories' },
-    { title: 'Users Management', icon: 'team', key: '/users' },
-    { title: 'Enrollment', icon: 'solution', key: '/enrollment' },
-    { title: 'Financials', icon: 'file', key: '/report' },
-    { title: 'Blogs', icon: 'read', key: '/blogs' },
-    { title: 'Manage Profile', icon: 'user', key: '/manageprofile' },
-    { title: 'Audit Trail', icon: 'audit', key: '/audittrail' },
+    { title: 'Dashboard', icon: 'dashboard', key: '' },
+    { title: 'Properties', icon: 'book', key: '' },
+    { title: 'Cleaning Requests', icon: 'appstore', key: '' },
+    { title: 'Cleaners', icon: 'team', key: '' },
+    { title: 'Payments', icon: 'solution', key: '' },
   ];
 
   constructor(private router: Router) {}
