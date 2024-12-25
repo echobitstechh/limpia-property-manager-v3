@@ -1,97 +1,168 @@
-.shope-with-easy-ph-cont {
-  background: linear-gradient(#1111115b, #11111156),
-    url("/assets/images/women.svg");
-  background-repeat: no-repeat;
+.login-bg {
+  background-image: url("/assets/images/loginbg.png");
+  background-size: cover;
   background-position: center;
-  background-size: contain;
-  height: 600px;
+  position: relative;
+  height: 100vh;
+  width: 100%;
 }
 
-/* .login-cont {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #cbcad799;
+  z-index: 1;
 }
-.login-cont-div {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  line-height: 4px;
-  width: 50%;
-}
-.login-cont-div p {
-  font-size: 24px;
-  font-weight: 500;
-  color: #202224;
-}
+
+/* ================================
+   Login Form Card Styling
+   ================================ */
+
 .login-form {
-  border: none;
-  flex: 1;
-  padding: 16px;
-  border-radius: 14px;
-  height: 28rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 600px;
+  padding: 40px 30px; /* Updated padding for inner spacing */
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.login-labels {
-  margin-bottom: 6px;
-  color: #232323;
-  font-size: 14px;
-  font-weight: 500;
+.card-body {
+  padding: 0; /* Removes default padding */
 }
-.login-inputs {
-  padding: 6px 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+
+/* ================================
+   Typography - Heading and Description
+   ================================ */
+
+h2 {
+  font-size: 1.8rem; /* Adjusted font size */
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 15px;
+}
+
+p {
+  font-size: 1rem; /* Adjusted font size */
+  color: #666666;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* ================================
+   Form Controls and Labels
+   ================================ */
+
+.form-control {
+  font-size: 0.95rem;
+  padding: 12px 15px; /* Updated padding for input fields */
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: none;
+}
+
+.form-control:focus {
   outline: none !important;
-  width: 25rem;
+  box-shadow: 0px 0px 3px rgba(0, 123, 255, 0.25); /* Soft focus effect */
+  border-color: #80bdff;
 }
-.form-group {
-  margin-top: 20px;
+
+label {
+  color: #666666;
+  font-size: 0.9rem; /* Smaller, more subtle label */
+  font-weight: 500;
+  margin-bottom: 5px;
 }
-.remember-me-div {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
+
+/* ================================
+   Remember Me and Forgot Password
+   ================================ */
+
+.form-group.d-flex {
+  margin-bottom: 20px; /* Space between checkbox and forgot password */
 }
-.remember-me-div span {
-  display: inline-flex;
-  gap: 2px !important;
-  align-items: center;
-  color: #053688;
+
+.remember-me {
+  font-size: 0.9rem; /* Smaller font size */
+  color: #666666;
 }
-.remember-me-div span a {
-  color: #053688;
+
+a {
+  color: #45a9ea;
+  font-weight: 500;
+  font-size: 0.9rem; /* Smaller, subtle font size */
   text-decoration: none;
 }
-@media (max-width: 820px) {
-  .login-cont {
-    display: flex;
-    flex-direction: column;
-  }
-  .login-cont-div {
-    width: 100%;
-  }
+
+a:hover {
+  color: #318dc7;
+}
+
+/* ================================
+   Button Styling
+   ================================ */
+
+.btn-custom {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px;
+  background-color: #4f2dbc;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #3b2290;
+}
+
+/* ================================
+   Register Link
+   ================================ */
+
+.text-center p {
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.text-center a {
+  color: #4f2dbc;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.text-center a:hover {
+  color: #3b2290;
+}
+
+/* ================================
+   Responsive Adjustments for Smaller Screens
+   ================================ */
+
+@media (max-width: 768px) {
   .login-form {
-    width: 100%;
-    height: fit-content;
+    padding: 30px 20px;
   }
-  .remember-me-div {
-    justify-content: center;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
+
+  h2 {
+    font-size: 1.6rem;
   }
-  .login-inputs {
-    width: 24rem;
+
+  p,
+  .form-control,
+  .remember-me,
+  .text-center p {
+    font-size: 0.85rem;
   }
-  .form-group {
-    margin-top: 10px;
+
+  .btn-custom {
+    font-size: 0.95rem;
   }
-} */
+}

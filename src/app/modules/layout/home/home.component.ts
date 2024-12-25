@@ -1,15 +1,17 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Event, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   collapsed = false;
   isDrawerVisible = false;
-  isLoggedIn = true;
+  showHeader: boolean = true;
+  showFooter: boolean = true;
+  isLoggedIn = false;
   userName = 'AB';
   activeMenu = '';
   sideBarDetails = [
@@ -22,6 +24,20 @@ export class HomeComponent {
 
   constructor(private router: Router) {}
 
+  ngOnInit(): void {
+    this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationEnd) {
+        const currentRoute = event.urlAfterRedirects;
+        this.showFooter = !(
+          currentRoute.includes('/auth/login') || currentRoute.includes('')
+        );
+        this.showHeader = !(
+          currentRoute.includes('') || currentRoute.includes('')
+        );
+      }
+    });
+  }
+
   toggleSidebar() {
     if (window.innerWidth < 768) {
       // Show drawer for mobile
@@ -31,14 +47,6 @@ export class HomeComponent {
       this.collapsed = !this.collapsed;
     }
   }
-
-  // navigateTo(path: string) {
-  //   this.activeMenu = path;
-  //   this.router.navigate([path]);
-  //   if (this.isDrawerVisible) {
-  //     this.isDrawerVisible = false; // Close drawer on navigation
-  //   }
-  // }
 
   navigateTo(menuItem: any) {
     console.log(menuItem); // Inspect the emitted object

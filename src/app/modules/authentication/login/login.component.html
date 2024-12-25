@@ -1,74 +1,60 @@
-<div class=" ">
-  <div class="flex min-h-screen w-full justify-between items-center">
-    <!-- Left Section -->
-    <div class="from-[#E4E4EB] to-[#E4E6F8] w-[55%] hidden xl:block">
-      <!-- h-[781px] flex flex-col justify-end style removed on the parent div-->
-      <div class="xl:block hidden shope-with-easy-ph-cont">
-        <h2 class="text-5xl py-5 pl-8 font-semibold mb-4 w-[376px] text-[#fff] font-Inter">
-          Shop With Easy Power Hub today
-        </h2>
-        <!-- <img src="assets/images/men.svg" alt="Easy Power Hub" class="" /> -->
-        <!-- w-[378px] h-[391px] style removed on image-->
-      </div>
-    </div>
-
-    <!-- Right Section -->
-    <div class="flex justify-center xl:w-[42%] w-full">
-      <div class="bg-white p-10 xl:w-[400px] w-full h-[]">
-        <h2 class="xl:text-4xl lg:text-3xl text-2xl font-semibold font-Inter xl:font-medium text-nowrap mb-6">
-          Login to Easy Power
-        </h2>
-        <p class="font-Poppin mb-7 font-[500] text-[#111]">
-          Enter your details below
+<div class="login-bg p-2 p-md-0">
+  <div class="overlay"></div>
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg login-form">
+      <div class="card-body">
+        <h2 class="text-center mb-3">Welcome To Limpiar!</h2>
+        <p class="text-center mb-4">
+          Manage all your property cleaning needs in one place. Let's get started with setting up your account.
         </p>
-        <div *ngIf="loginMessage" class="mt-2 alert alert-{{ loginMessageType }}" role="alert">
-          {{ loginMessage }}
-        </div>
+
+        <!-- Login Form -->
         <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-          <div class="mb-8">
-            <input class="border-b-2 w-full py-2 px-3 focus:outline-none" type="email" placeholder="Email"
-              formControlName="email" />
-            <div *ngIf="email.invalid && email.touched" class="text-red-500 text-sm">
-              <div *ngIf="email.errors?.['required']">Email is required.</div>
-              <div *ngIf="email.errors?.['email']">Invalid email format.</div>
+          <!-- Email -->
+          <div class="form-group mb-3">
+            <label for="email">Email</label>
+            <input type="email" id="email" formControlName="email" class="form-control"
+              placeholder="Enter your email" />
+            <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="text-danger">
+              <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required.</small>
+              <small *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email address.</small>
             </div>
           </div>
 
-          <div class="">
-            <input class="border-b-2 w-full py-2 px-3 focus:outline-none" type="password" placeholder="Password"
-              formControlName="password" />
-            <div *ngIf="password.invalid && password.touched" class="text-red-500 text-sm">
-              <div *ngIf="password.errors?.['required']">
-                Password is required.
-              </div>
-              <div *ngIf="password.errors?.['minlength']">
-                Password must be at least 6 characters long.
-              </div>
+          <!-- Password -->
+          <div class="form-group mb-3">
+            <label for="password">Password</label>
+            <input type="password" id="password" formControlName="password" class="form-control"
+              placeholder="Enter your password" />
+            <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="text-danger">
+              <small *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</small>
+              <small *ngIf="loginForm.get('password')?.hasError('minlength')">Password must be at least 8 characters
+                long.</small>
             </div>
           </div>
 
-          <div class="mt-10 flex items-center justify-between">
-            <app-button-with-loader [buttonType]="'submit'"
-              [classText]="'btn btn-custom w-[16rem] md:w-[14rem] xs:w-[11rem] h-10 flex-1'" [idleStateText]="'Log In'"
-              [isProcessing]="loading" [workingStateText]="'Logging In'" (buttonClick)="onSubmit()">
-            </app-button-with-loader>
-            <button class="size-10 flex items-center justify-center border border-black rounded-lg">
-              <img src="assets/icons/google.svg" alt="" />
-            </button>
+          <!-- Remember me and Forgot password -->
+          <div class="form-group d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <input type="checkbox" id="rememberMe" (change)="onCheckBoxChange($event)" [checked]="checkBox" />
+              <label for="rememberMe" class="ml-2 remember-me">Remember me</label>
+            </div>
+            <a class="nav-link" aria-current="page" routerLink="/forgot-password" routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }">
+              Forgot Password?
+            </a>
           </div>
+
+          <app-button-with-loader [idleStateText]="'Log In'" [isProcessing]="loading"
+            [workingStateText]="'Logging in...'" [classText]="'btn btn-custom w-100'"
+            (buttonClick)="onSubmit()"></app-button-with-loader>
         </form>
-        <div class="text-center my-3">
-          <a class="text-inherit inline-flex items-center gap-2 justify-center hover:text-inherit" aria-current="page"
-            routerLink="/forgot-password" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            Forgot Password? <span class="text-black font-medium">Reset</span>
-          </a>
-        </div>
-        <div class="flex items-center justify-center gap-2">
-          <p>Don't have an account?</p>
-          <a class="font-medium text-inherit hover:text-inherit" aria-current="page" routerLink="/signup"
-            routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-            Sign up
-          </a>
+
+        <div class="text-center mt-3">
+          <p class="d-inline-flex align-items-center gap-1">New member here? <a class="nav-link" aria-current="page"
+              routerLink="/auth/signup" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              Sign up
+            </a></p>
         </div>
       </div>
     </div>

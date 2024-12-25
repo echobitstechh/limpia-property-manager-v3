@@ -38,7 +38,7 @@
     <!-- Header -->
     <nz-header *ngIf="isLoggedIn" class="bg-light shadow-sm d-flex justify-content-between align-items-center px-3">
       <!-- Toggle Button -->
-      <button nz-button nzType="text" (click)="toggleSidebar()" class="d-md- btn text-danger">
+      <button nz-button nzType="text" (click)="toggleSidebar()" class="d-md- btn text-danger ">
         <i nz-icon nzType="menu" class="text-secondary"></i>
       </button>
       <!-- Profile Section -->
@@ -65,12 +65,12 @@
       </div>
     </nz-header>
     <!-- Content -->
-    <nz-content class="p-3" style="min-height: calc(100vh - 64px - 48px);">
-      <!-- <router-outlet></router-outlet> -->
+    <nz-content class="" style="min-height: calc(100vh - 64px - 48px);">
+      <router-outlet></router-outlet>
     </nz-content>
 
     <!-- Footer -->
-    <nz-footer *ngIf="!isLoggedIn" class="text-center py-2 border-top">
+    <nz-footer *ngIf="showFooter && !isLoggedIn" class="text-center py-2 border-top">
       Custom Footer
     </nz-footer>
   </nz-layout>
