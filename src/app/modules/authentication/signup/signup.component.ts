@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,11 +16,11 @@ import { AuthService } from '../../../services/auth.service';
   styleUrls: ['./signup.component.css'],
 })
 export class SignupComponent implements OnInit {
-  signupForm: FormGroup;
-  otpSent: boolean = false;
-  otpConfirmed: boolean = false;
-  errorMessage: string = '';
-
+  step1Form!: FormGroup;
+  step2Form!: FormGroup;
+  step3Form!: FormGroup;
+  step4Form!: FormGroup;
+  currentStep: number = 1;
   loading: boolean = false;
   signupMessage = '';
   signupMessageType = '';
@@ -29,181 +29,52 @@ export class SignupComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private apiService: ApiService,
-    private authService: AuthService
-  ) {
-    this.signupForm = this.fb.group({
-      email: ['', [Validators.required, this.emailValidator]],
-      otp: ['', Validators.required],
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', [Validators.required, Validators.minLength(3)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef
+  ) {}
+  ngOnInit(): void {
+    this.initForms();
+  }
+  passwordsMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password')?.value;
+    const confirmPassword = control.get('confirmPassword')?.value;
+
+    return password === confirmPassword ? null : { passwordsMismatch: true };
+  }
+  initForms(): void {
+    // Step 1 Form
+    this.step1Form = this.fb.group(
+      {
+        firstName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', Validators.required],
+        confirmPassword: ['', Validators.required],
+      },
+      { validator: this.passwordsMatchValidator }
+    );
+
+    // Step 2 Form
+    this.step2Form = this.fb.group({
+      propertyName: ['', Validators.required],
+      addressOfProperty: ['', Validators.required],
+      propertyType: ['', Validators.required],
     });
   }
-  ngOnInit(): void {}
-  emailValidator(control: AbstractControl): ValidationErrors | null {
-    const value = control.value;
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!emailPattern.test(value)) {
-      return { invalidEmail: true };
-    }
-
-    return null;
-  }
-
-  sendCode(): void {
-    // this.loading = true;
-    if (this.signupForm.get('email')?.valid) {
-      const { email } = this.signupForm.value;
-      this.otpSent = true;
-
-      this.apiService.signupEmail(email).subscribe(
-        (response) => {
-          console.log('response from api is: ', response);
-          console.log('response from api is: ', response);
-          if (response.message === 'Verification code sent to email') {
-            this.showSignupAlert('Code sent successfully', 'success');
-            console.log('Email success', response);
-            this.authService.storeUserId(response.data.userId);
-            this.otpSent = true;
-          } else {
-            console.error('Not a valid email.', response.message);
-            this.showSignupAlert(
-              'Failed to send code: ' + (response.message ?? 'incorrect email'),
-              'danger'
-            );
-          }
-          this.loading = false;
-          this.loading = false;
-        },
-        (error) => {
-          console.log('Error response from api: ', error.error);
-          this.errorMessage =
-            // error.error.error ||
-            error.error || 'An error occurred while sending verification code.';
-          this.showSignupAlert(this.errorMessage, 'danger');
-          this.loading = false;
-        }
-      );
+  onProceed(): void {
+    console.log('Current Step:', this.currentStep);
+    if (this.currentStep === 1 && this.step1Form.valid) {
+      this.currentStep++;
+    } else if (this.currentStep === 2 && this.step2Form.valid) {
+      // this.onSubmit();
     } else {
-      this.loading = false;
+      console.log('Validation Failed for step:', this.currentStep);
+      // this.logInvalidControls();
     }
+    this.cdr.detectChanges();
   }
 
-  confirmOtp(): void {
-    // this.loading = true;
-    this.otpConfirmed = true;
-
-    if (this.signupForm.get('otp')?.valid) {
-      const { otp } = this.signupForm.value;
-      this.apiService.signupOtp(otp).subscribe(
-        (response) => {
-          console.log('response from api is: ', response);
-          console.log('response from api is: ', response);
-          if (response.message === 'Verification successful') {
-            this.showSignupAlert('Otp sent successfully', 'success');
-            console.log('Otp sent success', response);
-            this.otpConfirmed = true;
-          } else {
-            console.error('Access denied. Incorrect.', response.message);
-            this.showSignupAlert(
-              'Failed to Continue: ' +
-                (response.message ?? 'incorrect otp provided'),
-              'danger'
-            );
-          }
-          this.loading = false;
-          this.loading = false;
-        },
-        (error) => {
-          console.log('Error response from api: ', error.error);
-          this.errorMessage =
-            error.error.error ||
-            error.error ||
-            'An error occurred while verifying otp.';
-
-          this.showSignupAlert(this.errorMessage, 'danger');
-          this.loading = false;
-        }
-      );
-    } else {
-      this.loading = false;
-    }
-  }
-
-  onSubmit(): void {
-    if (this.signupForm.valid) {
-      console.log('Form Submitted', this.signupForm.value);
-    } else {
-      console.log('Form is invalid');
-    }
-    this.loading = true;
-    if (this.signupForm.valid) {
-      const { firstName, lastName, password } = this.signupForm.value;
-      this.apiService.signupFinal(firstName, lastName, password).subscribe(
-        (response) => {
-          console.log('response from api is: ', response);
-          console.log('response from api is: ', response);
-          if (response.message === 'User created successfully') {
-            this.showSignupAlert('Signup successful', 'success');
-            console.log('Login success', response);
-            this.authService.storeJwtToken(response.token);
-            this.authService.storeRefreshToken(response.refreshToken);
-            this.authService.storeUserId(response.User.id);
-            this.authService.storeUser(response.User);
-            this.router.navigate(['/dashboard']);
-          } else {
-            console.error('Access denied. Cant signup.', response.message);
-            this.showSignupAlert(
-              'Failed to signup: ' +
-                (response.message ?? 'check your internet'),
-              'danger'
-            );
-          }
-          this.loading = false;
-          this.loading = false;
-        },
-        (error) => {
-          console.log('Error response from api: ', error.error);
-          this.errorMessage =
-            error.error.error ||
-            error.error ||
-            'An error occurred during signup.';
-
-          this.showSignupAlert(this.errorMessage, 'danger');
-          this.loading = false;
-        }
-      );
-    } else {
-      this.loading = false;
-    }
-  }
-
-  goBackToEmail() {
-    this.otpSent = false;
-    this.otpConfirmed = false;
-    this.signupForm.get('email')?.enable();
-  }
-
-  get email(): AbstractControl {
-    return this.signupForm.get('email')!;
-  }
-
-  get otp(): AbstractControl {
-    return this.signupForm.get('otp')!;
-  }
-
-  get firstName(): AbstractControl {
-    return this.signupForm.get('firstName')!;
-  }
-
-  get lastName(): AbstractControl {
-    return this.signupForm.get('lastName')!;
-  }
-
-  get password(): AbstractControl {
-    return this.signupForm.get('password')!;
-  }
   showSignupAlert(message: string, type: string) {
     // Clear any existing timeout to reset the timer
     if (this.signupAlertTimeout) {
