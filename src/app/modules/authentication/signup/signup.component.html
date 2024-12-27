@@ -8,29 +8,64 @@
         urna.</p>
     </div>
     <div>
-      <div *ngIf="currentStep === 1" class="" id="">
-        <p class="h5 fw-bold">Personal Information</p>
-        <div class="d-flex gap-2 mb-1">
-          <div class="form-group" style="flex: 1;">
-            <label for="firstName">First Name</label>
-            <input id="firstName" formControlName="firstName" type="text" class="form-control" [ngClass]="{
-                                                                                'is-invalid': step1Form.controls['firstName'].invalid && step1Form.controls['firstName'].touched
-                                                                              }" />
-            <div *ngIf="step1Form.controls['firstName'].invalid && step1Form.controls['firstName'].touched"
-              class="invalid-feedback">
-              First name is required.
+      <div *ngIf="currentStep === 1" class="gy-3" id="">
+        <div class="gy-4">
+          <p class="h5 fw-bold">Personal Information</p>
+          <div class="d-flex d-md-flex-column gap-2 mb-1">
+            <div class="form-group" style="flex: 1;">
+              <label for="firstName">First Name</label>
+              <input id="firstName" formControlName="firstName" type="text" class="form-control"
+                [ngClass]="{
+                          'is-invalid': step1Form.controls['firstName'].invalid && step1Form.controls['firstName'].touched}" />
+              <div *ngIf="step1Form.controls['firstName'].invalid && step1Form.controls['firstName'].touched"
+                class="invalid-feedback">
+                First name is required.
+              </div>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label for="lastName">Last Name</label>
+              <input id="lastName" formControlName="lastName" type="text" class="form-control"
+                [ngClass]="{
+                          'is-invalid': step1Form.controls['lastName'].invalid && step1Form.controls['lastName'].touched}" />
+              <div *ngIf="step1Form.controls['lastName'].invalid && step1Form.controls['lastName'].touched"
+                class="invalid-feedback">
+                Last name is required.
+              </div>
             </div>
           </div>
           <div class="form-group" style="flex: 1;">
-            <label for="lastName">Last Name</label>
-            <input id="lastName" formControlName="lastName" type="text" class="form-control" [ngClass]="{
-                                                                                'is-invalid': step1Form.controls['lastName'].invalid && step1Form.controls['lastName'].touched
-                                                                              }" />
-            <div *ngIf="step1Form.controls['lastName'].invalid && step1Form.controls['lastName'].touched"
+            <label for="email">Email</label>
+            <input id="email" formControlName="email" type="text" class="form-control" [ngClass]="{
+                        'is-invalid': step1Form.controls['email'].invalid && step1Form.controls['email'].touched}" />
+            <div *ngIf="step1Form.controls['email'].invalid && step1Form.controls['email'].touched"
               class="invalid-feedback">
-              Last name is required.
+              Email is required.
             </div>
           </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="password">Password</label>
+            <input id="password" formControlName="password" type="password" class="form-control"
+              [ngClass]="{
+                      'is-invalid': step1Form.controls['password'].invalid && step1Form.controls['password'].touched}" />
+            <div *ngIf="step1Form.controls['password'].invalid && step1Form.controls['password'].touched"
+              class="invalid-feedback">
+              Password is required.
+            </div>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" formControlName="confirmPassword" type="password" class="form-control"
+              [ngClass]="{
+                        'is-invalid': step1Form.controls['confirmPassword'].invalid && step1Form.controls['confirmPassword'].touched}" />
+            <div *ngIf="step1Form.controls['confirmPassword'].invalid && step1Form.controls['confirmPassword'].touched"
+              class="invalid-feedback">
+              Confirm Password is required.
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="h5 fw-bold">Company Information Setup</p>
+
         </div>
       </div>
     </div>
