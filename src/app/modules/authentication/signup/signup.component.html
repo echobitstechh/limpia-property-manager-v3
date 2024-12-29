@@ -65,7 +65,16 @@
         </div>
         <div>
           <p class="h5 fw-bold">Company Information Setup</p>
-
+          <div class="form-group" style="flex: 1;">
+            <label for="companyName">Email</label>
+            <input id="companyName" formControlName="companyName" type="text" class="form-control"
+              [ngClass]="{
+                        'is-invalid': step1Form.controls['companyName'].invalid && step1Form.controls['companyName'].touched}" />
+            <div *ngIf="step1Form.controls['companyName'].invalid && step1Form.controls['companyName'].touched"
+              class="invalid-feedback">
+              Company's name is required.
+            </div>
+          </div>
         </div>
       </div>
     </div>
