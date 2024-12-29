@@ -58,11 +58,9 @@ export class SignupComponent implements OnInit {
     );
 
     // Step 2 Form
-    this.step2Form = this.fb.group({
-      propertyName: ['', Validators.required],
-      addressOfProperty: ['', Validators.required],
-      propertyType: ['', Validators.required],
-    });
+    this.step2Form = this.fb.group({ selectedPropertyType: [''] });
+
+    this.step3Form = this.fb.group({});
   }
 
   onProceed(): void {
@@ -70,12 +68,40 @@ export class SignupComponent implements OnInit {
     if (this.currentStep === 1 && this.step1Form.valid) {
       this.currentStep++;
     } else if (this.currentStep === 2 && this.step2Form.valid) {
+      this.currentStep++;
+    } else if (this.currentStep === 3 && this.step3Form.valid) {
       // this.onSubmit();
     } else {
       console.log('Validation Failed for step:', this.currentStep);
-      // this.logInvalidControls();
     }
     this.cdr.detectChanges();
+  }
+
+  propertyTypes = [
+    { value: 'commercial property', label: 'Commercial Property' },
+    { value: 'industrial property', label: 'Industrial Property' },
+    {
+      value: 'public and institutional properties',
+      label: 'Public and Institutional Properties',
+    },
+    { value: 'specialized prperties', label: 'Specialized Properties' },
+  ];
+
+  selectedPropertyType: string | null = null;
+
+  onPropertyTypeSelect(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    const selectedType = inputElement.value;
+
+    const foundType = this.propertyTypes.find(
+      (type) => type.label === selectedType
+    );
+    if (foundType) {
+      this.selectedPropertyType = foundType.value;
+      this.currentStep = 3;
+    } else {
+      console.error('Invalid property type selected:', selectedType);
+    }
   }
 
   showSignupAlert(message: string, type: string) {

@@ -1,6 +1,6 @@
 <button class="btn gap-md-2 gap-1 text-md-h5 text-h6" [type]="buttonType" [ngClass]="classText"
   [disabled]="isProcessing" (click)="emitOnClickEvent()">
-  <div [innerHTML]="icon"></div>
+  <div [innerHTML]="icon" *ngIf="icon"></div>
   <img src="{{ svgIcon }}" alt="" class="" *ngIf="svgIcon" />
   {{ isProcessing ? workingStateText : idleStateText }}
   <ng-container *ngIf="isProcessing">

@@ -1,0 +1,21 @@
+.form-select:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.form-select {
+  outline: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.form-control:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.form-control {
+  outline: none;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+}

@@ -2,16 +2,16 @@
   <div>banner div</div>
   <div class="w-75 mx-auto py-3">
     <div>
-      <p class="display-3 fw-semibold ">Welcome to Limpiar Lorem Ispum</p>
+      <p class="h2 fw-semibold ">Welcome to Limpiar Lorem Ispum</p>
       <p style="color: #515854;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Neque tincidunt nisl, morbi
         aliquet gravida. Lorem adipiscing
         urna.</p>
     </div>
     <div>
-      <div *ngIf="currentStep === 1" class="gy-3" id="">
-        <div class="gy-4">
+      <div *ngIf="currentStep === 2" class="" id="">
+        <div class="gy-4 mb-3">
           <p class="h5 fw-bold">Personal Information</p>
-          <div class="d-flex d-md-flex-column gap-2 mb-1">
+          <div class="d-flex d-md-flex-column gap-2 my-2">
             <div class="form-group" style="flex: 1;">
               <label for="firstName">First Name</label>
               <input id="firstName" formControlName="firstName" type="text" class="form-control"
@@ -42,7 +42,7 @@
               Email is required.
             </div>
           </div>
-          <div class="form-group" style="flex: 1;">
+          <div class="form-group my-2" style="flex: 1;">
             <label for="password">Password</label>
             <input id="password" formControlName="password" type="password" class="form-control"
               [ngClass]="{
@@ -66,7 +66,7 @@
         <div>
           <p class="h5 fw-bold">Company Information Setup</p>
           <div class="form-group" style="flex: 1;">
-            <label for="companyName">Email</label>
+            <label for="companyName">Company Name</label>
             <input id="companyName" formControlName="companyName" type="text" class="form-control"
               [ngClass]="{
                         'is-invalid': step1Form.controls['companyName'].invalid && step1Form.controls['companyName'].touched}" />
@@ -75,9 +75,100 @@
               Company's name is required.
             </div>
           </div>
+          <div class="form-group my-2" style="flex: 1;">
+            <label for="role">Role</label>
+            <select formControlName="role" id="role" class="form-select"
+              [ngClass]="{'is-invalid': step1Form.controls['role'].invalid && step1Form.controls['role'].touched}">
+              <option value="" selected>Select Role</option>
+              <option value="property manager">Property Manager</option>
+              <option value="property owner">Property Owner</option>
+              <option value="facility manager">Facility Manager</option>
+              <option value="others">Others</option>
+            </select>
+            <div *ngIf="step1Form.controls['role'].invalid && step1Form.controls['role'].touched"
+              class="invalid-feedback">
+              Role is required.
+            </div>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="propertiesManaged">Number of Properties Managed</label>
+            <select formControlName="propertiesManaged" id="propertiesManaged" class="form-select"
+              [ngClass]="{'is-invalid': step1Form.controls['propertiesManaged'].invalid && step1Form.controls['propertiesManaged'].touched}">
+              <option value="" selected>Select number of properties</option>
+              <option value="property manager">Property Manager</option>
+              <option value="property owner">Property Owner</option>
+              <option value="facility manager">Facility Manager</option>
+              <option value="others">Others</option>
+            </select>
+            <div
+              *ngIf="step1Form.controls['propertiesManaged'].invalid && step1Form.controls['propertiesManaged'].touched"
+              class="invalid-feedback">
+              Number of properties is required.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentStep === 1">
+        <div class="gy-4 mb-3">
+          <p class="h5 fw-bold">Property Type (Optional)</p>
+
+          <div class="form-check my-3 px-4 py-3 rounded-sm shadow-sm border" *ngFor="let property of propertyTypes">
+            <input class="form-check-input" name="selectedPropertyType" type="checkbox" [id]="property.value"
+              [value]="property.value" (change)="onPropertyTypeSelect($event)" />
+            <label class="form-check-label" [for]="property.value">
+              {{ property.label }}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="currentStep === 3 && selectedPropertyType">
+        <div class="gy-4 mb-3">
+          <!-- <p class="h5 fw-bold">{{ selectedPropertyType.label }}</p> -->
+
+          <!-- Form Fields for Selected Property Type -->
+          <ng-container [ngSwitch]="selectedPropertyType.valueOf()">
+            <!-- Commercial Property -->
+            <div *ngSwitchCase="'commercial'">
+              <div class="form-group">
+                <label for="totalUnits">Total Units/Spaces</label>
+                <input id="totalUnits" type="number" class="form-control" />
+              </div>
+              <div class="form-group my-2">
+                <label for="cleaningNeeds">Cleaning Needs</label>
+                <select id="cleaningNeeds" class="form-select">
+                  <option>Specialized Cleaning</option>
+                  <option>Deep Cleaning</option>
+                </select>
+              </div>
+              <div class="form-group my-2">
+                <label for="frequency">Frequency of Cleaning</label>
+                <select id="frequency" class="form-select">
+                  <option>Bi-Weekly</option>
+                  <option>Monthly</option>
+                </select>
+              </div>
+            </div>
+            <!-- Industrial Property -->
+            <div *ngSwitchCase="'industrial'">
+              <p>Industrial Property specific fields...</p>
+            </div>
+            <!-- Public and Institutional Property -->
+            <div *ngSwitchCase="'public'">
+              <p>Public Property specific fields...</p>
+            </div>
+            <!-- Specialized Property -->
+            <div *ngSwitchCase="'specialized'">
+              <p>Specialized Property specific fields...</p>
+            </div>
+          </ng-container>
         </div>
       </div>
     </div>
+  </div>
+  <div class="d-flex justify-content-end mb-3 mt-3">
+    <app-button-with-loader [idleStateText]="currentStep < 2 ? 'Proceed' : 'Submit'" [classText]="'btn btn-custom px-4'"
+      (buttonClick)="onProceed()" [buttonType]="'button'">
+    </app-button-with-loader>
   </div>
   <div>phone div</div>
 </div>
