@@ -65,12 +65,12 @@ export class SignupComponent implements OnInit {
 
   onProceed(): void {
     console.log('Current Step:', this.currentStep);
-    if (this.currentStep === 1 && this.step1Form.valid) {
-      this.currentStep++;
+    if (this.currentStep === 1) {
+      console.log('Step 1 Valid:', this.step1Form.valid);
+      if (this.step1Form.valid) this.currentStep++;
     } else if (this.currentStep === 2 && this.step2Form.valid) {
       this.currentStep++;
     } else if (this.currentStep === 3 && this.step3Form.valid) {
-      // this.onSubmit();
     } else {
       console.log('Validation Failed for step:', this.currentStep);
     }
@@ -94,7 +94,7 @@ export class SignupComponent implements OnInit {
     const selectedType = inputElement.value;
 
     const foundType = this.propertyTypes.find(
-      (type) => type.label === selectedType
+      (type) => type.value === selectedType
     );
     if (foundType) {
       this.selectedPropertyType = foundType.value;
