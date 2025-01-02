@@ -60,7 +60,10 @@ export class SignupComponent implements OnInit {
     // Step 2 Form
     this.step2Form = this.fb.group({ selectedPropertyType: [''] });
 
-    this.step3Form = this.fb.group({});
+    this.step3Form = this.fb.group({
+      totalUnits: ['', Validators.required],
+      cleaningNeeds: ['', Validators.required],
+    });
   }
 
   onProceed(): void {

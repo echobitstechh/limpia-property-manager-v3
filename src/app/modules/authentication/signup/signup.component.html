@@ -8,7 +8,7 @@
         urna.</p>
     </div>
     <div>
-      <div *ngIf="currentStep === 2" class="" id="">
+      <div *ngIf="currentStep === 2">
         <div class="gy-4 mb-3">
           <p class="h5 fw-bold">Personal Information</p>
           <div class="d-flex d-md-flex-column gap-2 my-2">
@@ -35,7 +35,7 @@
           </div>
           <div class="form-group" style="flex: 1;">
             <label for="email">Email</label>
-            <input id="email" formControlName="email" type="text" class="form-control" [ngClass]="{
+            <input id="email" formControlName="email" type="email" class="form-control" [ngClass]="{
                         'is-invalid': step1Form.controls['email'].invalid && step1Form.controls['email'].touched}" />
             <div *ngIf="step1Form.controls['email'].invalid && step1Form.controls['email'].touched"
               class="invalid-feedback">
@@ -123,21 +123,19 @@
       </div>
       <div *ngIf="currentStep === 3 && selectedPropertyType">
         <div class="gy-4 mb-3">
-          <!-- <p class="h5 fw-bold">{{ selectedPropertyType.label }}</p> -->
-
-          <!-- Form Fields for Selected Property Type -->
           <ng-container [ngSwitch]="selectedPropertyType.valueOf()">
             <!-- Commercial Property -->
-            <div *ngSwitchCase="'commercial'">
+            <div *ngSwitchCase="'commercial property'">
               <div class="form-group">
                 <label for="totalUnits">Total Units/Spaces</label>
-                <input id="totalUnits" type="number" class="form-control" />
+                <input id="totalUnits" type="number" formControlName="totalUnits" class="form-control" />
               </div>
               <div class="form-group my-2">
                 <label for="cleaningNeeds">Cleaning Needs</label>
-                <select id="cleaningNeeds" class="form-select">
-                  <option>Specialized Cleaning</option>
-                  <option>Deep Cleaning</option>
+                <select id="cleaningNeeds" formControlName="cleaningNeeds" class="form-select">
+                  <option value="">--Select clening needs--</option>
+                  <option value="specialized cleaning">Specialized Cleaning</option>
+                  <option vakue="deep cleaning">Deep Cleaning</option>
                 </select>
               </div>
               <div class="form-group my-2">

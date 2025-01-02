@@ -11,14 +11,14 @@ const routes: Routes = [
   //   redirectTo: 'home',
   //   pathMatch: 'full',
   // },
-  // {
-  //   path: 'dashboard',
-  //   loadChildren: () =>
-  //     import('./modules/landing-page/landing-page.module').then(
-  //       (m) => m.LandingPageModule
-  //     ),
-  //   canActivate: [AuthGuard],
-  // },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./modules/landing-area/landing-area.module').then(
+        (m) => m.LandingAreaModule
+      ),
+    // canActivate: [AuthGuard],
+  },
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
